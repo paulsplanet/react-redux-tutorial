@@ -27,4 +27,43 @@ export const remove = id => ({
     id
 });
 
+const initialState = {
+    input: "",
+    todos: [
+        {
+            id: 1,
+            text: "redux basic",
+            done: true,
+        },
+        {
+            id: 2,
+            text: "react redux",
+            done: false
+        }
+    ]
+};
+
+function todos(state = initialState, action) {
+    switch(action.type) {
+        case CHANGE_INPUT:
+            return { ...state, input: action.input };
+        case INSERT: 
+            return { ...state, todos: state.todos.concat(action.todo) };
+        case TOGGLE:
+            return {
+                ...state,
+                todos: state.todos.map(todo => todo.id === action.id ? { ...todos, done: !todo.done } : todo )
+            };
+        case REMOVE:
+            return {
+                ...state, 
+                todos: state.todos.filter(todo => todo.id !== action.id )
+            };
+        default:
+            return state;
+    }
+}
+
+export default todos;
+
 
